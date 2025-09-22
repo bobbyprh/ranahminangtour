@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranah Minang Tour</title>
+    <link rel="icon" type="image/x-icon" href="assets/logo-removebg.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --minang-red: #D32F2F;
+            --minang-yellow: #FFC107;
+            --minang-black: #212121;
+            --minang-black-dark: #303030;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        /* --- Global Container --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+        
+        .page-content {
+            padding-top: 4rem;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        [data-animate-on-scroll] {
+            opacity: 0;
+        }
+
+        /* --- Navigation Bar --- */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: var(--minang-black);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--minang-yellow);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-logo img {
+            height: 40px; /* Adjust as needed */
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: var(--minang-yellow);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: url('assets/west_sumatra.jpg') no-repeat center center/cover;
+            color: white;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem; /* New property for consistent spacing */
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--minang-yellow);
+            line-height: 1.2;
+            margin: 0; /* Removing margin to use flexbox gap */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: white;
+            max-width: 700px;
+            margin: 0; /* Removing margin to use flexbox gap */
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--minang-red);
+            border: 2px solid transparent;
+            border-radius: 9999px;
+            text-decoration: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            margin: 0; /* Removing margin to use flexbox gap */
+        }
+
+        .hero-button:hover {
+            transform: scale(1.05);
+            background-color: var(--minang-yellow);
+            color: var(--minang-black);
+        }
+
+        /* --- Story Section --- */
+        .story-section {
+            background-color: white;
+            color: var(--minang-black);
+            min-height: auto;
+            padding: 6rem 1rem;
+        }
+
+        .story-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--minang-red);
+            margin-bottom: 1.5rem;
+        }
+
+        .story-section p {
+            font-size: 1rem;
+            line-height: 1.75;
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        /* --- Places Section --- */
+        .places-section {
+            background-color: var(--minang-black-dark);
+            padding: 6rem 0;
+            min-height: auto;
+        }
+
+        .places-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--minang-yellow);
+            margin-bottom: 2rem;
+        }
+        
+        .places-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .places-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 1rem;
+            gap: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+            padding: 1rem;
+        }
+
+        .place-card {
+            flex: 0 0 300px;
+            height: 350px;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform: scale(1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            scroll-snap-align: start;
+        }
+
+        .place-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .place-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .place-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .place-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .place-card:hover .overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 100%);
+        }
+
+        .place-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--minang-yellow);
+        }
+
+        .place-card p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .places-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .places-nav-btn:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .places-nav-btn.left {
+            left: 1rem;
+        }
+        
+        .places-nav-btn.right {
+            right: 1rem;
+        }
+
+        .places-nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .places-nav-btn svg {
+            width: 25px;
+            height: 25px;
+            fill: var(--minang-black);
+        }
+
+        .places-container::-webkit-scrollbar {
+            display: none;
+        }
+        .places-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* --- Reviews Section --- */
+        .reviews-section {
+            background-color: var(--minang-yellow);
+            color: var(--minang-black);
+            padding: 6rem 1rem;
+            min-height: auto;
+        }
+
+        .reviews-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--minang-black);
+            margin-bottom: 2rem;
+        }
+        
+        .reviews-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-grid {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 1rem;
+            gap: 2rem;
+            -webkit-overflow-scrolling: touch;
+            padding: 1rem;
+        }
+
+        .review-card {
+            flex: 0 0 350px;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--minang-black);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            scroll-snap-align: start;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card .stars {
+            font-size: 2rem;
+            color: var(--minang-red);
+            margin-bottom: 1rem;
+        }
+
+        .review-card p.quote {
+            font-style: italic;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-card p.author {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .reviews-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .reviews-nav-btn:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .reviews-nav-btn.left {
+            left: 1rem;
+        }
+        
+        .reviews-nav-btn.right {
+            right: 1rem;
+        }
+
+        .reviews-nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .reviews-nav-btn svg {
+            width: 25px;
+            height: 25px;
+            fill: var(--minang-black);
+        }
+
+        /* Hide scrollbar for swipable section */
+        .review-grid::-webkit-scrollbar {
+            display: none;
+        }
+        .review-grid {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+
+        /* --- Contact Section --- */
+        .contact-section {
+            background-color: var(--minang-black);
+            color: white;
+            padding: 6rem 1rem;
+        }
+
+        .contact-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--minang-yellow);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-section p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icon img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        .social-icon.instagram { background-color: var(--minang-red); }
+        .social-icon.tiktok { background-color: var(--minang-yellow); }
+        .social-icon.whatsapp { background-color: white; }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .contact-button {
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            display: inline-flex;
+            align-items: center;
+            color: var(--minang-black);
+            background-color: var(--minang-yellow);
+        }
+
+        .contact-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- Footer --- */
+        .site-footer {
+            background-color: var(--minang-black);
+            color: #ccc;
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.875rem;
+        }
+
+        /* --- Responsive Styles (Media Queries) --- */
+        @media (min-width: 640px) {
+            .hero-title { font-size: 4.5rem; }
+            .hero-subtitle { font-size: 1.25rem; }
+            .story-section p { font-size: 1.125rem; }
+            .review-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                overflow-x: hidden;
+            }
+            .contact-buttons { flex-direction: row; }
+            .places-nav-btn, .reviews-nav-btn { display: flex; }
+        }
+
+        @media (min-width: 768px) {
+            .hero-title { font-size: 5rem; }
+            .hero-subtitle { font-size: 1.5rem; }
+            .story-section h2, .reviews-section h2, .contact-section h2 { font-size: 3rem; }
+            .review-grid { grid-template-columns: repeat(3, 1fr); }
+            .contact-buttons { justify-content: center; }
+            .places-nav-btn { display: flex; }
+            .reviews-nav-btn { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="main-nav">
+        <div class="container nav-content">
+            <a href="#" class="nav-logo">
+                <img src="assets/logo-removebg.png" alt="Ranah Minang Tour Logo">
+                RANAH MINANG TOUR
+            </a>
+            <div class="nav-links">
+                <a href="#story-page">Our Story</a>
+                <a href="#places-page">Destinations</a>
+                <a href="#reviews-page">Reviews</a>
+                <a href="#contact-page">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Front Page) -->
+    <section id="front-page" class="hero-section page-content">
+        <div class="hero-overlay">
+            <div class="animate-fade-in" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center;">
+                <h1 class="hero-title">RANAH MINANG TOUR</h1>
+                <p class="hero-subtitle">Discover the vibrant heart of West Sumatra. Your adventure, our guide to its hidden gems and rich heritage.</p>
+                <a href="#story-page" class="hero-button">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story/Purpose Section -->
+    <section id="story-page" class="story-section page-content" data-animate-on-scroll>
+        <div class="container">
+            <h2>Our Story, Our Passion</h2>
+            <p>Born from a deep-rooted love for our homeland, Ranah Minang Tour was founded with a singular purpose: to share the raw beauty, breathtaking landscapes, and profound cultural heritage of West Sumatra with the world. We don't just guide you to a destination; we invite you to immerse yourself in the authentic stories and traditions of our people.</p>
+            <p style="margin-top: 1rem;">Every tour is a journey of discovery, meticulously crafted to ensure you feel the warmth of Minangkabau hospitality and experience a land where every mountain, lake, and village holds a piece of history. We are more than a tour company; we are storytellers, and we can't wait to share our story with you.</p>
+        </div>
+    </section>
+
+    <!-- Places to Go Section (Swipable) -->
+    <section id="places-page" class="places-section page-content">
+        <div class="container" data-animate-on-scroll>
+            <h2>Popular Destinations</h2>
+            <div class="places-wrapper">
+                <button id="scroll-left-btn" class="places-nav-btn left">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L77.3 256l105.4 105.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128z"/></svg>
+                </button>
+                <div id="places-container" class="places-container">
+                    <!-- Swipable cards with enhanced hover effects -->
+                    <div class="place-card">
+                        <img src="assets/lake_maninjau.png" alt="Lake Maninjau">
+                        <div class="overlay">
+                            <h3>Lake Maninjau</h3>
+                            <p>A breathtaking caldera lake surrounded by lush green hills, offering a serene escape and a challenge with its famous 44 hairpin turns.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/jam_gadang.JPG" alt="Bukittinggi City">
+                        <div class="overlay">
+                            <h3>Bukittinggi City</h3>
+                            <p>The vibrant heart of Minangkabau culture, a city rich with history, unique architecture, and the iconic Jam Gadang clock tower.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/harau.png" alt="Harau Valley">
+                        <div class="overlay">
+                            <h3>Harau Valley</h3>
+                            <p>A paradise for nature lovers, this majestic canyon is a series of towering granite cliffs and stunning waterfalls.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/sianok.png" alt="Sianok Canyon">
+                        <div class="overlay">
+                            <h3>Sianok Canyon</h3>
+                            <p>A magnificent ravine located just outside of Bukittinggi, offering incredible panoramic views and a tranquil environment.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/padang.png" alt="Padang City">
+                        <div class="overlay">
+                            <h3>Padang City</h3>
+                            <p>Explore the bustling capital city, famous for its delicious Padang food and vibrant waterfront.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/mentawai.png" alt="Mentawai Islands">
+                        <div class="overlay">
+                            <h3>Mentawai Islands</h3>
+                            <p>A surfer's paradise, known for world-class waves, pristine beaches, and unique tribal culture.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/pagaruyung.jpg" alt="Pagaruyung Palace">
+                        <div class="overlay">
+                            <h3>Pagaruyung Palace</h3>
+                            <p>Visit the magnificent replica of the former royal palace of the Pagaruyung Kingdom, a symbol of Minangkabau culture.</p>
+                        </div>
+                    </div>
+                    <div class="place-card">
+                        <img src="assets/anai.JPG" alt="Anai Valley Waterfall">
+                        <div class="overlay">
+                            <h3>Anai Valley Waterfall</h3>
+                            <p>A stunning waterfall surrounded by a lush forest and a historic railway track, making for a picturesque stop.</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="scroll-right-btn" class="places-nav-btn right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L178.7 256 73.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews-page" class="reviews-section page-content">
+        <div class="container" data-animate-on-scroll>
+            <h2>Hear From Our Happy Travelers</h2>
+            <div class="reviews-wrapper">
+                <button id="reviews-scroll-left" class="reviews-nav-btn left">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. --><path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L77.3 256l105.4 105.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128z"/></svg>
+                </button>
+                <div id="review-container" class="review-grid">
+                    <!-- Review Card 1 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"The guides were so knowledgeable and friendly. They showed us parts of Sumatra we never would have found on our own. A truly unforgettable experience."</p>
+                        <p class="author">- John Doe, Australia</p>
+                    </div>
+                    <!-- Review Card 2 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"Absolutely stunning! The sceneries were breathtaking, and the tour was perfectly organized. I highly recommend Ranah Minang Tour."</p>
+                        <p class="author">- Jane Smith, United States</p>
+                    </div>
+                    <!-- Review Card 3 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"A truly authentic experience. We learned so much about the culture and felt like part of the community. Every moment was a cherished memory."</p>
+                        <p class="author">- Ahmad Fauzi, Malaysia</p>
+                    </div>
+                     <!-- Review Card 4 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"This tour was incredible! The places we visited were magnificent, and the hospitality was unmatched. A perfect trip from start to finish."</p>
+                        <p class="author">- Maria Garcia, Spain</p>
+                    </div>
+                    <!-- Review Card 5 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"We had an amazing time exploring West Sumatra. Ranah Minang Tour made the entire process so easy and enjoyable. Thank you!"</p>
+                        <p class="author">- Kenji Tanaka, Japan</p>
+                    </div>
+                    <!-- Review Card 6 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"From the food to the scenery, everything was top-notch. The tour group was small and intimate, which made the experience even better."</p>
+                        <p class="author">- Lisa Wong, Singapore</p>
+                    </div>
+                    <!-- Review Card 7 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"A hidden gem of a destination! The team was so passionate about their culture and it was truly inspiring. A must-do tour."</p>
+                        <p class="author">- David Chen, China</p>
+                    </div>
+                    <!-- Review Card 8 -->
+                    <div class="review-card">
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="quote">"This was more than a vacation; it was an education. We learned so much and made memories we'll cherish forever. Five stars!"</p>
+                        <p class="author">- Sarah Brown, Canada</p>
+                    </div>
+                </div>
+                <button id="reviews-scroll-right" class="reviews-nav-btn right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L178.7 256 73.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Social Media Section -->
+    <section id="contact-page" class="contact-section page-content" data-animate-on-scroll>
+        <div class="container">
+            <h2>Ready for Your Journey?</h2>
+            <p>We're excited to help you plan your perfect West Sumatra adventure. Get in touch with us through any of the channels below.</p>
+            <div class="social-icons">
+                <!-- Replace this placeholder with the path to your Instagram image -->
+                <a href="https://instagram.com/ranahminangtour" target="_blank" class="social-icon instagram">
+                    <img src="assets/ig_logo.png" alt="Instagram Icon">
+                </a>
+                <!-- Replace this placeholder with the path to your TikTok image -->
+                <a href="https://tiktok.com/@ranahminangtour" target="_blank" class="social-icon tiktok">
+                    <img src="assets/tiktok_logo.png" alt="TikTok Icon">
+                </a>
+                <!-- Replace this placeholder with the path to your WhatsApp image -->
+                <a href="https://wa.me/628123456789" target="_blank" class="social-icon whatsapp">
+                    <img src="assets/wa_logo.png" alt="WhatsApp Icon">
+                </a>
+            </div>
+            <div class="contact-buttons">
+                <a href="https://forms.gle/your-google-form-link" target="_blank" class="contact-button btn-reserve">
+                    Reservation Form
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2025 Ranah Minang Tour. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const placesContainer = document.getElementById('places-container');
+            const scrollLeftBtn = document.getElementById('scroll-left-btn');
+            const scrollRightBtn = document.getElementById('scroll-right-btn');
+
+            const reviewContainer = document.getElementById('review-container');
+            const reviewScrollLeftBtn = document.getElementById('reviews-scroll-left');
+            const reviewScrollRightBtn = document.getElementById('reviews-scroll-right');
+
+            const scrollAmount = 325; // This value is based on card width + margin, adjust if needed
+
+            // Handle scrolling for places section
+            if (placesContainer && scrollLeftBtn && scrollRightBtn) {
+                const updatePlacesNav = () => {
+                    scrollLeftBtn.classList.toggle('disabled', placesContainer.scrollLeft === 0);
+                    scrollRightBtn.classList.toggle('disabled', placesContainer.scrollLeft + placesContainer.clientWidth >= placesContainer.scrollWidth - 1);
+                };
+                
+                placesContainer.addEventListener('scroll', updatePlacesNav);
+                updatePlacesNav();
+
+                scrollLeftBtn.addEventListener('click', () => {
+                    placesContainer.scrollBy({
+                        left: -scrollAmount, 
+                        behavior: 'smooth'
+                    });
+                });
+
+                scrollRightBtn.addEventListener('click', () => {
+                    placesContainer.scrollBy({
+                        left: scrollAmount, 
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Handle scrolling for reviews section
+            if (reviewContainer && reviewScrollLeftBtn && reviewScrollRightBtn) {
+                const updateReviewsNav = () => {
+                    reviewScrollLeftBtn.classList.toggle('disabled', reviewContainer.scrollLeft === 0);
+                    reviewScrollRightBtn.classList.toggle('disabled', reviewContainer.scrollLeft + reviewContainer.clientWidth >= reviewContainer.scrollWidth - 1);
+                };
+
+                reviewContainer.addEventListener('scroll', updateReviewsNav);
+                updateReviewsNav();
+
+                reviewScrollLeftBtn.addEventListener('click', () => {
+                    reviewContainer.scrollBy({
+                        left: -scrollAmount, 
+                        behavior: 'smooth'
+                    });
+                });
+
+                reviewScrollRightBtn.addEventListener('click', () => {
+                    reviewContainer.scrollBy({
+                        left: scrollAmount, 
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Intersection Observer for scroll-in animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'slideInUp 0.8s ease-out forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('[data-animate-on-scroll]').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
